@@ -2,6 +2,7 @@ package com.pedrosoares.ceep.ui.activity;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import com.pedrosoares.ceep.R;
@@ -22,9 +23,11 @@ public class activity_lista_notas extends AppCompatActivity {
 
         NotaDAO dao = new NotaDAO();
 
-        dao.insere(new Nota("Ptrimeira nota", "Primeira Descrição"));
+        dao.insere(new Nota("Primeira nota", "Primeira Descrição"));
         List<Nota> todasNotas = dao.todos();
 
-        listaNotas.setAdapter(new ListaNotasAdapter());
+        listaNotas.setAdapter(new ListaNotasAdapter(this, todasNotas));
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        listaNotas.setLayoutManager(layoutManager);
     }
 }
