@@ -14,6 +14,8 @@ import java.util.List;
 
 public class activity_lista_notas extends AppCompatActivity {
 
+    List<Nota> todasNotas;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,8 +25,11 @@ public class activity_lista_notas extends AppCompatActivity {
 
         NotaDAO dao = new NotaDAO();
 
-        dao.insere(new Nota("Primeira nota", "Primeira Descrição"));
-        List<Nota> todasNotas = dao.todos();
+        for (int i = 1; i <=1000; i ++){
+            dao.insere(new Nota("titulo " + i, "Descrição " + i));
+            todasNotas = dao.todos();
+        }
+
 
         listaNotas.setAdapter(new ListaNotasAdapter(this, todasNotas));
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
