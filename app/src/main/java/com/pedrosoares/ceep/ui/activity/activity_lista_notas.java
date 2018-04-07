@@ -2,7 +2,6 @@ package com.pedrosoares.ceep.ui.activity;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import com.pedrosoares.ceep.R;
@@ -21,18 +20,24 @@ public class activity_lista_notas extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lista_notas);
 
-        RecyclerView listaNotas = findViewById(R.id.lista_notas_recyclerview);
+        notasDeExemplo();
+        configuraRecyclerView();
+    }
 
+    private void notasDeExemplo() {
         NotaDAO dao = new NotaDAO();
+        dao.insere(new Nota("Primeira ", "Descrição pequena "),
+                new Nota("Segunda ", "Segunda nota bem maior que a primeira"));
+        todasNotas = dao.todos();
 
-        for (int i = 1; i <=1000; i ++){
-            dao.insere(new Nota("titulo " + i, "Descrição " + i));
-            todasNotas = dao.todos();
-        }
+    }
 
+    private void configuraRecyclerView() {
+        RecyclerView listaNotas = findViewById(R.id.lista_notas_recyclerview);
+        configuraAdapter(listaNotas);
+    }
 
+    private void configuraAdapter(RecyclerView listaNotas) {
         listaNotas.setAdapter(new ListaNotasAdapter(this, todasNotas));
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        listaNotas.setLayoutManager(layoutManager);
     }
 }

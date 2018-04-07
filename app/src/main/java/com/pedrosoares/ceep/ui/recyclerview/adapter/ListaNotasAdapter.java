@@ -15,8 +15,8 @@ import java.util.List;
 
 public class ListaNotasAdapter extends RecyclerView.Adapter<ListaNotasAdapter.NotaViewHolder> {
 
-    private Context context;
-    private List<Nota> notas;
+    private final Context context;
+    private final List<Nota> notas;
 
     public ListaNotasAdapter(Context context, List<Nota> notas) {
         this.context = context;
