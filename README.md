@@ -7,5 +7,5 @@ App para guardar notas do usuário como o keep do google.
 # link do curso  
 https://cursos.alura.com.br/course/recyclerview-listas-flexiveis-e-performaticas
 # Certificado do curso
-Em andamento
+https://cursos.alura.com.br/certificate/1b92ecf1-c201-4823-9a7a-87568bb13de7
 
