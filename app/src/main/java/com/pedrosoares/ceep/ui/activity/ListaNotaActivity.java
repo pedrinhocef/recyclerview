@@ -12,7 +12,7 @@ import com.pedrosoares.ceep.R;
 import com.pedrosoares.ceep.dao.NotaDAO;
 import com.pedrosoares.ceep.model.Nota;
 import com.pedrosoares.ceep.ui.recyclerview.adapter.ListaNotasAdapter;
-import com.pedrosoares.ceep.ui.recyclerview.adapter.OnItemClickListener;
+import com.pedrosoares.ceep.ui.recyclerview.adapter.listener.OnItemClickListener;
 
 import java.util.List;
 
@@ -51,6 +51,10 @@ public class ListaNotaActivity extends AppCompatActivity {
 
     private List<Nota> pegaTodasNotas() {
         NotaDAO dao = new NotaDAO();
+        for (int i = 0; i < 10; i++) {
+            dao.insere(new Nota("Titulo" + (i+1),
+                    "Descricao" + (i+1)));
+        }
         return dao.todos();
     }
 
@@ -59,6 +63,13 @@ public class ListaNotaActivity extends AppCompatActivity {
         if (ehResultadoComNota(requestCode, resultCode, data)) {
             Nota notaRecebida = (Nota) data.getSerializableExtra("nota");
             adiciona(notaRecebida);
+        }
+
+        if (requestCode == 2 && resultCode == CODIGO_RESULTADO_NOTA_CRIADA
+                && temNota(data)) {
+            Nota notaRecebida = (Nota) data.getSerializableExtra(CHAVE_NOTA);
+            Toast.makeText(this, notaRecebida.getTitulo()
+                    , Toast.LENGTH_SHORT).show();
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
@@ -95,9 +106,11 @@ public class ListaNotaActivity extends AppCompatActivity {
         listaNotas.setAdapter(mAdapter);
         mAdapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
-            public void onItemClick() {
-                Toast.makeText(ListaNotaActivity.this,
-                        "TesteViewClicada", Toast.LENGTH_SHORT).show();
+            public void onItemClick(Nota nota) {
+                Intent abreFormularioComNota = new Intent(ListaNotaActivity.this,
+                        FormularioNotaActivity.class);
+                abreFormularioComNota.putExtra(CHAVE_NOTA, nota);
+                startActivityForResult(abreFormularioComNota,2);
             }
         });
     }

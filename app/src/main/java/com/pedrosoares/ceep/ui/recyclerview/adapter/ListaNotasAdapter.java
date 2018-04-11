@@ -1,6 +1,7 @@
 package com.pedrosoares.ceep.ui.recyclerview.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 
 import com.pedrosoares.ceep.R;
 import com.pedrosoares.ceep.model.Nota;
+import com.pedrosoares.ceep.ui.recyclerview.adapter.listener.OnItemClickListener;
 
 import java.util.List;
 
@@ -51,6 +53,7 @@ public class ListaNotasAdapter extends RecyclerView.Adapter<ListaNotasAdapter.No
 
         private final TextView titulo;
         private final TextView descricao;
+        private Nota nota;
 
         public NotaViewHolder(View itemView) {
             super(itemView);
@@ -59,15 +62,20 @@ public class ListaNotasAdapter extends RecyclerView.Adapter<ListaNotasAdapter.No
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    onItemClickListener.onItemClick();
+                    onItemClickListener.onItemClick(nota);
                 }
             });
             }
 
             public void vincula(Nota nota) {
-                titulo.setText(nota.getTitulo());
-                descricao.setText(nota.getDescricao());
+            this.nota = nota;
+            preencheCampo(nota);
             }
+
+        private void preencheCampo(Nota nota) {
+            titulo.setText(nota.getTitulo());
+            descricao.setText(nota.getDescricao());
+        }
     }
 
     public void adiciona(Nota nota) {

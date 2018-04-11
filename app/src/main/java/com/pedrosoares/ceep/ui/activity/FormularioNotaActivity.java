@@ -1,15 +1,19 @@
 package com.pedrosoares.ceep.ui.activity;
 
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.pedrosoares.ceep.R;
 import com.pedrosoares.ceep.model.Nota;
+
+import java.io.Serializable;
 
 import static com.pedrosoares.ceep.ui.activity.NotaActivityConstantes.CHAVE_NOTA;
 import static com.pedrosoares.ceep.ui.activity.NotaActivityConstantes.CODIGO_RESULTADO_NOTA_CRIADA;
@@ -22,6 +26,15 @@ public class FormularioNotaActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_formulario_nota);
 
+        Intent dadosRecebidos = getIntent();
+        if (dadosRecebidos.hasExtra(CHAVE_NOTA)) {
+            Nota notaRecebida
+                    = (Nota) dadosRecebidos.getSerializableExtra(CHAVE_NOTA);
+            TextView titulo = findViewById(R.id.formulario_nota_titulo);
+            titulo.setText(notaRecebida.getTitulo());
+            TextView descricao = findViewById(R.id.formulario_nota_descricao);
+            descricao.setText(notaRecebida.getDescricao());
+        }
     }
 
     @Override
