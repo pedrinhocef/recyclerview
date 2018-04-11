@@ -6,11 +6,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.pedrosoares.ceep.R;
 import com.pedrosoares.ceep.dao.NotaDAO;
 import com.pedrosoares.ceep.model.Nota;
 import com.pedrosoares.ceep.ui.recyclerview.adapter.ListaNotasAdapter;
+import com.pedrosoares.ceep.ui.recyclerview.adapter.OnItemClickListener;
 
 import java.util.List;
 
@@ -90,7 +92,14 @@ public class ListaNotaActivity extends AppCompatActivity {
 
     private void configuraAdapter(List<Nota> todasNotas, RecyclerView listaNotas) {
         mAdapter = new ListaNotasAdapter(this, todasNotas);
-        listaNotas.setAdapter(new ListaNotasAdapter(this, todasNotas));
+        listaNotas.setAdapter(mAdapter);
+        mAdapter.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick() {
+                Toast.makeText(ListaNotaActivity.this,
+                        "TesteViewClicada", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
 
