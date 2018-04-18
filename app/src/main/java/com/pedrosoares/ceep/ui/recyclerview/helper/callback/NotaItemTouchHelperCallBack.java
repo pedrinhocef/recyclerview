@@ -8,7 +8,7 @@ import com.pedrosoares.ceep.ui.recyclerview.adapter.ListaNotasAdapter;
 
 public class NotaItemTouchHelperCallBack extends ItemTouchHelper.Callback {
 
-    private ListaNotasAdapter mAdapter;
+    private final ListaNotasAdapter mAdapter;
 
     public NotaItemTouchHelperCallBack(ListaNotasAdapter mAdapter) {
         this.mAdapter = mAdapter;
@@ -26,14 +26,22 @@ public class NotaItemTouchHelperCallBack extends ItemTouchHelper.Callback {
     public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
         int posicaoInicial = viewHolder.getAdapterPosition();
         int posicaoFinal = target.getAdapterPosition();
+        trocaNotas(posicaoInicial, posicaoFinal);
+        return true;
+    }
+
+    private void trocaNotas(int posicaoInicial, int posicaoFinal) {
         new NotaDAO().troca(posicaoInicial, posicaoFinal);
         mAdapter.troca(posicaoInicial, posicaoFinal);
-        return true;
     }
 
     @Override
     public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
         int posicaoDeslizada = viewHolder.getAdapterPosition();
+        removeNota(posicaoDeslizada);
+    }
+
+    private void removeNota(int posicaoDeslizada) {
         new NotaDAO().remove(posicaoDeslizada);
         mAdapter.remove(posicaoDeslizada);
     }

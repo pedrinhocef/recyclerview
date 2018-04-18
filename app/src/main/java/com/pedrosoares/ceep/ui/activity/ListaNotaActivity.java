@@ -27,11 +27,13 @@ import static com.pedrosoares.ceep.ui.activity.NotaActivityConstantes.POSICAO_IN
 
 public class ListaNotaActivity extends AppCompatActivity {
 
+    public static final String TITULO_APPBAR = "Notas";
     ListaNotasAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTitle(TITULO_APPBAR);
         setContentView(R.layout.activity_lista_notas);
         List<Nota> todasNotas = pegaTodasNotas();
         configuraRecyclerView(todasNotas);
@@ -113,7 +115,7 @@ public class ListaNotaActivity extends AppCompatActivity {
     }
 
     private boolean temNota(Intent data) {
-        return data.hasExtra(CHAVE_NOTA);
+        return data != null && data.hasExtra(CHAVE_NOTA);
     }
 
     private boolean ehRequisicaoInsereNota(int requestCode) {
@@ -123,6 +125,10 @@ public class ListaNotaActivity extends AppCompatActivity {
     private void configuraRecyclerView(List<Nota> todasNotas) {
         RecyclerView listaNotas = findViewById(R.id.lista_notas_recyclerview);
         configuraAdapter(todasNotas, listaNotas);
+        configuraItemTouchHelper(listaNotas);
+    }
+
+    private void configuraItemTouchHelper(RecyclerView listaNotas) {
         ItemTouchHelper itemTouchHelper = new
                 ItemTouchHelper(new NotaItemTouchHelperCallBack(mAdapter));
         itemTouchHelper.attachToRecyclerView(listaNotas);
