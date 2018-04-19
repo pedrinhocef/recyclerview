@@ -8,7 +8,6 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.pedrosoares.ceep.R;
 import com.pedrosoares.ceep.dao.NotaDAO;
@@ -59,10 +58,6 @@ public class ListaNotaActivity extends AppCompatActivity {
 
     private List<Nota> pegaTodasNotas() {
         NotaDAO dao = new NotaDAO();
-        for (int i = 0; i < 10; i++) {
-            dao.insere(new Nota("Titulo" + (i + 1),
-                    "Descricao" + (i + 1)));
-        }
         return dao.todos();
     }
 
@@ -82,9 +77,6 @@ public class ListaNotaActivity extends AppCompatActivity {
                 if (ehPosicaoValida(posicaoRecebida)) {
                     new NotaDAO().altera(posicaoRecebida, notaRecebida);
                     mAdapter.altera(notaRecebida, posicaoRecebida);
-                } else {
-                    Toast.makeText(this,
-                            "Ocorreu um erro ao tentar alterar a nota.", Toast.LENGTH_SHORT).show();
                 }
             }
         }
