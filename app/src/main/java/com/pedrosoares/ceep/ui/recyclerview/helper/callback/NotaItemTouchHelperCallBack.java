@@ -3,6 +3,7 @@ package com.pedrosoares.ceep.ui.recyclerview.helper.callback;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 
+import com.pedrosoares.ceep.dao.CeepDAO;
 import com.pedrosoares.ceep.dao.NotaDAO;
 import com.pedrosoares.ceep.ui.recyclerview.adapter.ListaNotasAdapter;
 

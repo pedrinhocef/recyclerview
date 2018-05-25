@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.pedrosoares.ceep.R;
+import com.pedrosoares.ceep.dao.CeepDAO;
 import com.pedrosoares.ceep.dao.NotaDAO;
 import com.pedrosoares.ceep.model.Nota;
 import com.pedrosoares.ceep.ui.recyclerview.adapter.ListaNotasAdapter;
@@ -57,8 +58,10 @@ public class ListaNotaActivity extends AppCompatActivity {
     }
 
     private List<Nota> pegaTodasNotas() {
-        NotaDAO dao = new NotaDAO();
-        return dao.todos();
+//        NotaDAO dao = new NotaDAO();
+//        return dao.todos();
+          CeepDAO dao = new CeepDAO(this);
+          return dao.buscaNotas();
     }
 
     @Override
@@ -75,8 +78,10 @@ public class ListaNotaActivity extends AppCompatActivity {
                 Nota notaRecebida = (Nota) data.getSerializableExtra(CHAVE_NOTA);
                 int posicaoRecebida = data.getIntExtra(CHAVE_POSICAO, POSICAO_INVALIDA);
                 if (ehPosicaoValida(posicaoRecebida)) {
-                    new NotaDAO().altera(posicaoRecebida, notaRecebida);
-                    mAdapter.altera(notaRecebida, posicaoRecebida);
+//                    new NotaDAO().altera(posicaoRecebida, notaRecebida);
+//                    mAdapter.altera(notaRecebida, posicaoRecebida);
+                    new CeepDAO(this).altera(notaRecebida);
+                    mAdapter.altera(notaRecebida,posicaoRecebida);
                 }
             }
         }
@@ -97,8 +102,10 @@ public class ListaNotaActivity extends AppCompatActivity {
     }
 
     private void adiciona(Nota nota) {
-        new NotaDAO().insere(nota);
-        mAdapter.adiciona(nota);
+//        new NotaDAO().insere(nota);
+//        mAdapter.adiciona(nota);
+          new CeepDAO(this).insereNota(nota);
+          mAdapter.adiciona(nota);
     }
 
     private boolean ehResultadoInsereNota(int requestCode, Intent data) {
